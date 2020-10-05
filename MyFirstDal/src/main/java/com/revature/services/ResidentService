@@ -1,0 +1,38 @@
+package com.revature.services;
+
+import com.revature.dao.implementations.*;
+import com.revature.models.*;
+
+public class ResidentService {
+	
+	static ResidentDAOGenericImpl residentDao = new ResidentDAOGenericImpl();
+	static PetsDAOGenericImpl petDao = new PetsDAOGenericImpl();
+	static CarsDAOGenericImpl carDao = new CarsDAOGenericImpl();
+	static ApartmentDAOGenericImpl apartmentDao = new ApartmentDAOGenericImpl();
+	
+	public static void addCarForResident() {
+		
+	}
+	
+	public static void addRoommate() {
+		
+	}
+	
+	public static void getResidentsByApartment() {
+		
+	}
+	
+	public static void getResidentInfo(int i) {
+		Resident resident = residentDao.get(i);
+		System.out.println("Id: " + resident.getId() + " First Name: " + resident.getFirstName() + 
+				" Last Name: " + resident.getLastName() + " Apartment: " + resident.getApartment());
+	}
+	
+	public static void removePet(int i) {
+
+		Pets pet = petDao.get(i);
+		//Delete pet
+		
+		
+	}
+}
