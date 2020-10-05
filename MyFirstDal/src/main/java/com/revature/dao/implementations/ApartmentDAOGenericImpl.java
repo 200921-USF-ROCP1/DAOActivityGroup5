@@ -108,7 +108,7 @@ public class ApartmentDAOGenericImpl implements GenericDAO<Apartment> {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Apartment apartment = new Apartment();
-				apartment.setId(rs.getInt("apartments.id"));
+				apartment.setId(rs.getInt("id"));
 				apartment.setBuildingLetter(rs.getString("building_letter"));
 				apartment.setRoomNumber(rs.getInt("room_number"));
 				apartment.setMonthlyRent(rs.getDouble("monthly_rent"));

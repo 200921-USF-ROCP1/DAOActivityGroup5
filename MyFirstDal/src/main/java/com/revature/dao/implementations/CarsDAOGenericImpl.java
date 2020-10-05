@@ -29,8 +29,8 @@ public class CarsDAOGenericImpl implements GenericDAO<Cars> {
 				ResultSet rs = ps.executeQuery();
 				if(!rs.next()) {
 					Resident resident = new Resident();
-					ResidentDAOImpl rd = new ResidentDAOImpl();
-					rd.createResident(resident);
+					GenericDAO<Resident> rd = new ResidentDAOGenericImpl();
+					rd.create(resident);
 					
 				}
 				
@@ -72,8 +72,8 @@ public class CarsDAOGenericImpl implements GenericDAO<Cars> {
 				
 				if(residentRs.next()) {
 					Resident resident = new Resident();
-					ResidentDAOImpl rdi = new ResidentDAOImpl();
-					rdi.createResident(resident);
+					GenericDAO<Resident> rdi = new ResidentDAOGenericImpl();
+					rdi.create(resident);
 					
 					car.setResident(resident);
 				}
@@ -147,9 +147,12 @@ public class CarsDAOGenericImpl implements GenericDAO<Cars> {
 				
 				// create the resident
 				Resident resident = new Resident();
-				resident.setId(rs.getInt("residents.id"));
-				resident.setFirstName(rs.getString("first_name"));
-				resident.setLastName(rs.getString("last_name"));
+				GenericDAO<Resident> rdi = new ResidentDAOGenericImpl();
+				rdi.create(resident);
+				
+//				resident.setId(rs.getInt("residents.id"));
+//				resident.setFirstName(rs.getString("first_name"));
+//				resident.setLastName(rs.getString("last_name"));
 				
 				car.setResident(resident);
 				
@@ -165,5 +168,37 @@ public class CarsDAOGenericImpl implements GenericDAO<Cars> {
 		
 		return null;
 	}
+	
+	public List<Cars> getCarsByOwner(Resident owner) {
+		// TODO Auto-generated method stub
+				List<Cars> cars = new ArrayList<Cars>();
+				
+				try {
+					PreparedStatement ps = connection.prepareStatement("SELECT * FROM cars WHERE owner_id = ?;");
+					ps.setInt(1, owner.getId());
+					
+					ResultSet rs = ps.executeQuery();
+					while(rs.next()) {
+						// create the cars
+						Cars car = new Cars();
+						car.setId(rs.getInt("id"));
+						car.setMake(rs.getString("make"));
+						car.setModel(rs.getString("model"));
+						car.setYear(rs.getInt("year"));
+						car.setLicensePlate(rs.getString("license_plate"));
+						
+						cars.add(car);
+					}
+					
+					return cars;
+				
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				return null;
+	}
+
 
 }

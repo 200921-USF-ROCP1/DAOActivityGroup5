@@ -141,22 +141,28 @@ public class ResidentDAOGenericImpl implements GenericDAO<Resident> {
 
 		try {
 			PreparedStatement ps = connection.prepareStatement(
-					"SELECT * FROM residents " + "LEFT JOIN apartments on residents.apartment_id = apartment.id;");
+					"SELECT * FROM residents " + "LEFT JOIN apartments on residents.apartment_id = apartments.id;");
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Resident resident = new Resident();
-				resident.setId(rs.getInt("residents.id"));
+				resident.setId(rs.getInt("id"));
 				resident.setFirstName(rs.getString("first_name"));
 				resident.setLastName(rs.getString("last_name"));
 
 				// Get the columns pertaining to the apartment
 				// and set the apartment
+				
+				
 				Apartment apartment = new Apartment();
-				apartment.setId(rs.getInt("apartments.id"));
-				apartment.setBuildingLetter(rs.getString("building_letter"));
-				apartment.setRoomNumber(rs.getInt("room_number"));
-				apartment.setMonthlyRent(rs.getDouble("monthly_rent"));
+				
+				GenericDAO<Apartment> apartmentDAO = new ApartmentDAOGenericImpl();
+				apartmentDAO.create(apartment);
+//				
+//				apartment.setId(rs.getInt("apartments_id"));
+//				apartment.setBuildingLetter(rs.getString("building_letter"));
+//				apartment.setRoomNumber(rs.getInt("room_number"));
+//				apartment.setMonthlyRent(rs.getDouble("monthly_rent"));
 
 				resident.setApartment(apartment);
 

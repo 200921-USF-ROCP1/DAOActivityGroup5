@@ -69,7 +69,7 @@ public class PetsDAOGenericImpl implements GenericDAO<Pets> {
 						.prepareStatement("SELECT * FROM apartments WHERE id  ?");
 				apartmentStatement.setInt(1, rs.getInt("apartment_id"));
 				
-				ApartmentDAOGenericImpl apartmentDao = new ApartmentDAOGenericImpl();
+				GenericDAO<Apartment> apartmentDao = new ApartmentDAOGenericImpl();
 				Apartment apartment = new Apartment();
 				apartment = apartmentDao.get(rs.getInt("apartment_id"));
 				
@@ -131,13 +131,13 @@ public class PetsDAOGenericImpl implements GenericDAO<Pets> {
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				Pets pet = new Pets();
-				pet.setId(rs.getInt("pets.id"));
+				pet.setId(rs.getInt("id"));
 				pet.setBreed(rs.getString("breed"));
 				pet.setName(rs.getString("name"));
 				pet.setIsServiceAnimal(rs.getBoolean("is_service_animal"));
 				
 				Apartment apartment = new Apartment();
-				ApartmentDAOGenericImpl apartmentDAO = new ApartmentDAOGenericImpl();
+				GenericDAO<Apartment> apartmentDAO = new ApartmentDAOGenericImpl();
 				apartment = apartmentDAO.get(rs.getInt("apartment_id"));
 				
 				pet.setApartment(apartment);
